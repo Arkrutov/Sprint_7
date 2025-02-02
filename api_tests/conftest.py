@@ -3,6 +3,9 @@ import requests
 import random
 import string
 
+from helper.helper import Helper
+
+
 @pytest.fixture
 # метод регистрации нового курьера возвращает список из логина и пароля
 # если регистрация не удалась, возвращает пустой список
@@ -52,4 +55,18 @@ def register_new_courier_and_return_login_password():
 
     #удаляем курьера
     response = requests.delete(f'https://qa-scooter.praktikum-services.ru/api/v1/courier/{courier_id}')
-    assert response.status_code == 200
+
+
+
+@pytest.fixture
+def generate_random_data():
+    helper = Helper()
+    login = helper.generate_random_string(10)
+    password = helper.generate_random_string(10)
+    first_name = helper.generate_random_string(10)
+    user_data = []
+    user_data.append(login)
+    user_data.append(password)
+    user_data.append(first_name)
+    return user_data
+

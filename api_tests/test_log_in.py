@@ -1,8 +1,6 @@
 import allure
 import requests
 
-from helper.helper import Helper
-
 class TestLogIn:
     @allure.title("Логин курьера")
     def test_log_in_courier(self, register_new_courier_and_return_login_password):
@@ -62,15 +60,12 @@ class TestLogIn:
             assert response_data['message'] == response_text
 
     @allure.title("Логин не сушествующего курьера")
-    def test_log_in_non_existent_courier(self):
-        with allure.step("Подготовка данных"):
-            helper = Helper()
-            login = helper.generate_random_string(10)
-            password = helper.generate_random_string(10)
-            payload = {
-                "login": login,
-                "password": password,
-            }
+    def test_log_in_non_existent_courier(self, generate_random_data):
+        payload = {
+            "login": generate_random_data[0],
+            "password": generate_random_data[1],
+            "firstName": generate_random_data[2]
+        }
 
         with allure.step("Отправляем запрос на логин курьера"):
             response = requests.post('https://qa-scooter.praktikum-services.ru/api/v1/courier/login', data=payload)

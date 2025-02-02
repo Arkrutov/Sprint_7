@@ -1,7 +1,7 @@
 import allure
 import requests
 
-class TestLogIn:
+class TestOrderList():
     @allure.title("В тело ответа возвращается список заказов")
     def test_order_list_return_list(self):
         with allure.step("Отправляем запрос на получения списка заказов"):
